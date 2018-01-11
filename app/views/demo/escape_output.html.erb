@@ -1,0 +1,14 @@
+<% evil_string = "<script>alert('Gotcha!');</script>" %>
+<% good_string = "<strong>Welcome to my site!</strong>" %>
+
+<!-- default doesn't allow tags to be used -->
+<%= evil_string %> <br>
+<%= good_string %> <br>
+
+<!-- allows one round of tag usage -->
+<%= raw evil_string %> <br>
+<%= raw good_string %> <br>
+
+<!-- multiple usages -->
+<%= evil_string.html_safe %> <br>
+<%= good_string.html_safe %> <br>
