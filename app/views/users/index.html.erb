@@ -1,0 +1,32 @@
+<% @page_title = "All Admin Users" %>
+
+<%= link_to  "<< Back to Menu", admin_path, class:"back-link" %>
+
+<div class="admin_users index">
+  <h2>Admin Users</h2>
+
+  <%= link_to  "Add New Admin User", new_user_path, class:"action new" %>
+
+  <div><%= pluralize(@users.size, 'admin user') %> found</div>
+
+  <table>
+    <tr>
+      <th>Username</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+
+    <% @users.each do |admin_user| %>
+    <tr>
+      <td><%= admin_user.username %></td>
+      <td><%= admin_user.name %></td>
+      <td><%= mail_to(admin_user.email) %></td>
+      <td class="actions">
+        <%= link_to  "Edit", edit_user_path(admin_user), :class => 'action edit' %>
+        <%= link_to  "Delete", delete_user_path(admin_user), :class => 'action delete' %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>

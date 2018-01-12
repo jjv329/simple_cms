@@ -1,6 +1,9 @@
 class SubjectsController < ApplicationController
   #specifies the layout to use
   layout 'admin'
+  before_action :confirm_logged_in
+  before_action :set_subject_count, :only => [:new, :create, :edit, :update]
+
   def index
     @subjects = Subject.sorted
     render('index') #default
@@ -12,7 +15,6 @@ class SubjectsController < ApplicationController
 
   def new
     @subject = Subject.new
-    @subject_count = Subject.count + 1
   end
 
   def create
@@ -25,13 +27,11 @@ class SubjectsController < ApplicationController
     redirect_to subjects_path
     else
     #If save fails, redisplay the form so user can fix problems
-     @subject_count = Subject.count + 1
      render 'new' 
     end
   end
 
   def edit
-    @subject_count = Subject.count
     @subject = Subject.find(params[:id])
   end
 
@@ -41,7 +41,6 @@ class SubjectsController < ApplicationController
       flash[:notice] = "Subject Updated Successfully"
       redirect_to subject_path(@subject)
     else
-      @subject_count = Subject.count
       render 'edit'
     end
   end
@@ -60,5 +59,12 @@ class SubjectsController < ApplicationController
   private
   def subject_params
     params.require(:subject).permit(:name, :position, :visible)
+  end
+
+  def set_subject_count
+    @subject_count = Subject.count
+    if params[:action] == 'new'|| params[:action] == 'create'
+      @subject_count += 1    
+    end
   end
 end

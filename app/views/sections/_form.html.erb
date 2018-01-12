@@ -22,10 +22,10 @@
     </tr>
     <tr>
         <th>Content</th>
-        <td><%= f.text_area :content, '40x10' %></td>
+        <td><%= f.text_area :content %></td>
     </tr>
     <tr>
-        <th>Page ID</th>
-        <td><%= f.select :page_id, @pages.map {|p| [p.name, p.id]} %></td>
+        <th>Page</th>
+        <td><%= f.object.page.name %></td>
     </tr>
 </table>
